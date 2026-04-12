@@ -1,0 +1,205 @@
+---
+// EasterEggs: hidden interactive surprises scattered across the site.
+// Konami code cat rain, console greeting, and secret "cat" typing detection.
+---
+
+<script>
+  let consolePrinted = false;
+
+  function initEasterEggs() {
+    // Guard against double-binding after view transitions
+    if (document.documentElement.dataset.easterEggsBound === "true") return;
+    document.documentElement.dataset.easterEggsBound = "true";
+
+    const prefersReducedMotion = window.matchMedia(
+      "(prefers-reduced-motion: reduce)"
+    ).matches;
+
+    // ── 1. Console message (once per session) ──────────────────────────
+    if (!consolePrinted) {
+      consolePrinted = true;
+      console.log(
+        "%c\u{1F431} hey curious one! %c\nthis site was built with astro, tailwind, and lots of cats.\nsource: https://github.com/rainxchzed/rainxchzed.github.io",
+        "font-size: 16px; font-weight: bold; color: #38bdf8;",
+        "font-size: 12px; color: #a3a3a3;"
+      );
+    }
+
+    // ── Helpers ─────────────────────────────────────────────────────────
+    function isTypingTarget(el: EventTarget | null): boolean {
+      if (!el || !(el instanceof HTMLElement)) return false;
+      const tag = el.tagName;
+      return (
+        tag === "INPUT" ||
+        tag === "TEXTAREA" ||
+        el.isContentEditable
+      );
+    }
+
+    // ── 2. Konami Code ─────────────────────────────────────────────────
+    const konamiSequence = [
+      "ArrowUp", "ArrowUp",
+      "ArrowDown", "ArrowDown",
+      "ArrowLeft", "ArrowRight",
+      "ArrowLeft", "ArrowRight",
+      "b", "a",
+    ];
+    let konamiIndex = 0;
+
+    // ── 3. Secret "cat" typing detector ────────────────────────────────
+    const catWord = "cat";
+    let catIndex = 0;
+
+    function handleKeydown(e: KeyboardEvent) {
+      if (isTypingTarget(e.target)) return;
+
+      // --- Konami ---
+      const expected = konamiSequence[konamiIndex];
+      if (e.key === expected) {
+        konamiIndex++;
+        if (konamiIndex === konamiSequence.length) {
+          konamiIndex = 0;
+          triggerKonami();
+        }
+      } else {
+        // Allow partial re-match (e.g. pressing Up resets to index 1)
+        konamiIndex = e.key === konamiSequence[0] ? 1 : 0;
+      }
+
+      // --- "cat" detector ---
+      if (e.key.toLowerCase() === catWord[catIndex]) {
+        catIndex++;
+        if (catIndex === catWord.length) {
+          catIndex = 0;
+          flashCatEyes();
+        }
+      } else {
+        catIndex = e.key.toLowerCase() === catWord[0] ? 1 : 0;
+      }
+    }
+
+    document.addEventListener("keydown", handleKeydown);
+
+    // ── Konami: cat rain + toast ────────────────────────────────────────
+    function triggerKonami() {
+      showToast("you found me! meow~");
+
+      if (prefersReducedMotion) return; // skip animation
+
+      const count = 20;
+      for (let i = 0; i < count; i++) {
+        const cat = document.createElement("div");
+        cat.textContent = "\u{1F431}";
+        cat.setAttribute("aria-hidden", "true");
+        Object.assign(cat.style, {
+          position: "fixed",
+          top: "-40px",
+          left: `${Math.random() * 100}vw`,
+          fontSize: `${16 + Math.random() * 18}px`,
+          zIndex: "99999",
+          pointerEvents: "none",
+          opacity: "1",
+          transition: "none",
+          willChange: "transform, opacity",
+        } as CSSStyleDeclaration);
+        document.body.appendChild(cat);
+
+        const duration = 1800 + Math.random() * 2200; // 1.8–4s
+        const drift = (Math.random() - 0.5) * 120; // horizontal sway
+
+        const start = performance.now();
+        function fall(now: number) {
+          const elapsed = now - start;
+          const progress = Math.min(elapsed / duration, 1);
+          const y = progress * (window.innerHeight + 60);
+          const x = Math.sin(progress * Math.PI * 2) * drift;
+          cat.style.transform = `translate(${x}px, ${y}px) rotate(${progress * 360}deg)`;
+          cat.style.opacity = String(1 - progress * 0.4);
+          if (progress < 1) {
+            requestAnimationFrame(fall);
+          } else {
+            cat.remove();
+          }
+        }
+        // Stagger start
+        setTimeout(() => requestAnimationFrame(fall), Math.random() * 600);
+      }
+    }
+
+    // ── Toast ───────────────────────────────────────────────────────────
+    function showToast(message: string) {
+      const toast = document.createElement("div");
+      toast.textContent = message;
+      toast.setAttribute("role", "status");
+      toast.setAttribute("aria-live", "polite");
+      Object.assign(toast.style, {
+        position: "fixed",
+        bottom: "2rem",
+        left: "50%",
+        transform: "translateX(-50%)",
+        padding: "0.6rem 1.4rem",
+        borderRadius: "9999px",
+        background: "rgb(var(--accent))",
+        color: "rgb(var(--bg))",
+        fontSize: "0.95rem",
+        fontWeight: "600",
+        zIndex: "99999",
+        pointerEvents: "none",
+        opacity: "0",
+        transition: "opacity 0.35s ease",
+        boxShadow: "0 4px 24px rgba(var(--accent), 0.35)",
+      } as CSSStyleDeclaration);
+      document.body.appendChild(toast);
+
+      // Fade in
+      requestAnimationFrame(() => {
+        toast.style.opacity = "1";
+      });
+
+      // Fade out after 3s, then remove
+      setTimeout(() => {
+        toast.style.opacity = "0";
+        toast.addEventListener("transitionend", () => toast.remove(), {
+          once: true,
+        });
+      }, 3000);
+    }
+
+    // ── Cat eye flash ──────────────────────────────────────────────────
+    function flashCatEyes() {
+      const eyes = document.querySelectorAll<SVGGElement>(".cat-eye");
+      if (eyes.length === 0) return;
+
+      eyes.forEach((eye) => {
+        const sclera = eye.querySelector("circle"); // first circle = outer eye
+        if (!sclera) return;
+
+        // Apply glow
+        sclera.style.filter =
+          "drop-shadow(0 0 6px rgb(var(--accent))) drop-shadow(0 0 14px rgb(var(--accent)))";
+        sclera.style.fill = "rgb(var(--accent))";
+        sclera.style.transition = "filter 0.3s ease, fill 0.3s ease";
+
+        // Remove after 700ms
+        setTimeout(() => {
+          sclera.style.filter = "";
+          sclera.style.fill = "rgb(var(--bg))";
+          setTimeout(() => {
+            sclera.style.transition = "";
+          }, 300);
+        }, 700);
+      });
+    }
+  }
+
+  // ── Bootstrap ──────────────────────────────────────────────────────────
+  // Initial page load
+  initEasterEggs();
+
+  // View transition navigations: re-bind after page swap
+  document.addEventListener("astro:page-load", () => {
+    // Reset bound flag so listeners re-attach on the fresh DOM
+    delete document.documentElement.dataset.easterEggsBound;
+    initEasterEggs();
+  });
+</script>

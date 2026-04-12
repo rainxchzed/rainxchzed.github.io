@@ -30,12 +30,13 @@ const projects = [
   <h2 class="font-serif text-2xl font-semibold mb-6">projects</h2>
 
   <div class="grid gap-4">
-    {projects.map((p) => (
+    {projects.map((p, i) => (
       <a
         href={p.href}
         target="_blank"
         rel="noopener noreferrer"
-        class="group block rounded-xl border border-default bg-elevated p-5 transition-all duration-300 hover:-translate-y-0.5 hover:border-accent"
+        class="scroll-reveal group block rounded-xl border border-default bg-elevated p-5 transition-all duration-300 hover:-translate-y-0.5 hover:border-accent"
+        style={`transition-delay: ${i * 100}ms`}
       >
         <div class="flex items-start justify-between gap-4">
           <div class="min-w-0 flex-1">
@@ -62,3 +63,34 @@ const projects = [
     ))}
   </div>
 </section>
+
+<script>
+  function initScrollReveal() {
+    const elements = document.querySelectorAll('.scroll-reveal:not(.revealed)');
+
+    if (!elements.length) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (entry.isIntersecting) {
+            const el = entry.target as HTMLElement;
+            el.classList.add('revealed');
+            observer.unobserve(el);
+          }
+        }
+      },
+      { threshold: 0.1, rootMargin: '0px 0px -50px 0px' },
+    );
+
+    for (const el of elements) {
+      observer.observe(el);
+    }
+  }
+
+  // Init on first load
+  initScrollReveal();
+
+  // Re-init after view transitions (handles astro:page-load for ClientRouter)
+  document.addEventListener('astro:page-load', initScrollReveal);
+</script>

@@ -22,16 +22,17 @@ const links = [
 ---
 
 <section class="py-12">
-  <h2 class="font-serif text-2xl font-semibold mb-6">get in touch</h2>
-  <p class="text-muted mb-6 max-w-prose">
+  <h2 class="scroll-reveal font-serif text-2xl font-semibold mb-6">get in touch</h2>
+  <p class="scroll-reveal text-muted mb-6 max-w-prose" style="transition-delay: 100ms">
     Open to collaboration, open-source contributions, and interesting Android / KMP conversations.
   </p>
   <ul class="grid gap-3">
-    {links.map(({ label, href, handle, icon }) => (
+    {links.map(({ label, href, handle, icon }, i) => (
       <li>
         <a
           href={href}
-          class="group flex items-center justify-between gap-4 rounded-lg border border-default bg-elevated px-4 py-3 transition-all duration-300 hover:border-accent hover:-translate-y-0.5"
+          class="scroll-reveal group flex items-center justify-between gap-4 rounded-lg border border-default bg-elevated px-4 py-3 transition-all duration-300 hover:border-accent hover:-translate-y-0.5"
+          style={`transition-delay: ${(i + 2) * 100}ms`}
         >
           <div class="flex items-center gap-3 min-w-0">
             <span class="text-muted group-hover:text-accent transition-colors">

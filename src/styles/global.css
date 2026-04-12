@@ -139,6 +139,27 @@
   animation: cat-blink 5s ease-in-out infinite;
 }
 
+/* ---------- Scroll Reveal ---------- */
+
+.scroll-reveal {
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+.scroll-reveal.revealed {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+
+/* Respect reduced motion: show elements immediately, no animation */
+@media (prefers-reduced-motion: reduce) {
+  .scroll-reveal {
+    opacity: 1;
+    transform: none;
+  }
+}
+
 /* View transition theming — for smooth theme swap */
 ::view-transition-old(root),
 ::view-transition-new(root) {

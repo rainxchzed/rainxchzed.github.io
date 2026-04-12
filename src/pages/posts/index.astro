@@ -29,7 +29,7 @@ const years = [...byYear.keys()].sort((a, b) => b - a);
     ) : (
       <div class="space-y-12">
         {years.map((year) => (
-          <section class="animate-fade-up delay-100">
+          <section class="scroll-reveal" style={`transition-delay: ${years.indexOf(year) * 100}ms`}>
             <h2 class="font-serif text-xl text-muted mb-4">{year}</h2>
             <div class="grid gap-3">
               {byYear.get(year)!.map((post) => (

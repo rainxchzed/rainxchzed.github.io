@@ -1,0 +1,55 @@
+---
+---
+
+<div
+  id="scroll-progress"
+  class="fixed top-0 left-0 z-50 h-[2px] w-full origin-left"
+  style="transform: scaleX(0); opacity: 0; background: rgb(var(--accent)); box-shadow: 0 0 6px rgb(var(--accent) / 0.5);"
+  aria-hidden="true"
+></div>
+
+<style>
+  @media (prefers-reduced-motion: reduce) {
+    #scroll-progress {
+      box-shadow: none !important;
+    }
+  }
+</style>
+
+<script>
+  function initScrollProgress() {
+    const bar = document.getElementById('scroll-progress') as HTMLDivElement | null;
+    if (!bar) return;
+
+    let ticking = false;
+
+    function update() {
+      const scrollTop = window.scrollY;
+      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+      const progress = docHeight > 0 ? Math.min(scrollTop / docHeight, 1) : 0;
+
+      bar!.style.transform = `scaleX(${progress})`;
+      bar!.style.opacity = progress === 0 ? '0' : '1';
+
+      ticking = false;
+    }
+
+    function onScroll() {
+      if (!ticking) {
+        requestAnimationFrame(update);
+        ticking = true;
+      }
+    }
+
+    window.addEventListener('scroll', onScroll, { passive: true });
+
+    // Run once on init to set correct state
+    update();
+  }
+
+  // Initial load
+  initScrollProgress();
+
+  // Re-init after view transitions
+  document.addEventListener('astro:page-load', initScrollProgress);
+</script>

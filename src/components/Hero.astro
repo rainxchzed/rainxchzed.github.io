@@ -5,17 +5,19 @@
 <section class="pt-16 md:pt-20 pb-8">
   <div class="flex items-start gap-6">
     <div class="flex-1 min-w-0">
-      <p class="text-sm text-muted animate-fade-up">hi there,</p>
-      <h1 class="font-serif text-4xl md:text-5xl font-semibold tracking-tight mt-2 animate-fade-up delay-100">
+      <p class="text-sm text-muted" aria-label="hi there,">
+        <span id="hero-typed"></span><span id="hero-cursor" class="hero-cursor">|</span>
+      </p>
+      <h1 id="hero-heading" class="font-serif text-4xl md:text-5xl font-semibold tracking-tight mt-2 hero-stagger-hidden">
         i'm <span class="text-accent">usmon</span>
       </h1>
-      <p class="mt-5 text-lg max-w-prose leading-relaxed animate-fade-up delay-200" style="color: rgb(var(--fg) / 0.86);">
+      <p id="hero-bio" class="mt-5 text-lg max-w-prose leading-relaxed hero-stagger-hidden" style="color: rgb(var(--fg) / 0.86);">
         16 y/o Android & Kotlin Multiplatform developer with big ambitions.
         I build things non-tech users can use with ease — and I'm diving deep
         into mathematics and the art of learning itself. I love beautiful UIs,
         open source, and cats.
       </p>
-      <div class="mt-6 flex items-center gap-5 text-sm animate-fade-up delay-300">
+      <div id="hero-cta" class="mt-6 flex items-center gap-5 text-sm hero-stagger-hidden">
         <a href="/posts" class="font-medium text-fg hover:text-accent transition-colors">
           read posts →
         </a>
@@ -29,8 +31,12 @@
     </div>
 
     <!-- Cat mascot — hidden on mobile for space -->
-    <div class="hidden sm:block text-fg animate-fade-up delay-500 shrink-0" aria-hidden="true">
-      <svg viewBox="0 0 140 140" class="h-36 w-36">
+    <div
+      id="cat-container"
+      class="hidden sm:block text-fg animate-fade-up delay-500 shrink-0 relative"
+      aria-hidden="true"
+    >
+      <svg id="cat-svg" viewBox="0 0 140 140" class="h-36 w-36">
         <!-- Tail: rendered first so it sits behind the body; animated via CSS -->
         <path
           class="cat-tail"
@@ -52,50 +58,423 @@
         <circle cx="84" cy="118" r="1.6" fill="rgb(var(--accent))" opacity="0.55" />
 
         <!-- Head: WIDER than tall for a chubby chibi face -->
-        <ellipse cx="70" cy="58" rx="42" ry="34" fill="currentColor" />
+        <g id="cat-head">
+          <ellipse cx="70" cy="58" rx="42" ry="34" fill="currentColor" />
 
-        <!-- Ears: shorter, to stop the face from feeling elongated -->
-        <path d="M38 32 L30 12 L56 28 Z" fill="currentColor" />
-        <path d="M102 32 L110 12 L84 28 Z" fill="currentColor" />
+          <!-- Ears: shorter, to stop the face from feeling elongated -->
+          <path id="cat-ear-left" d="M38 32 L30 12 L56 28 Z" fill="currentColor" />
+          <path id="cat-ear-right" d="M102 32 L110 12 L84 28 Z" fill="currentColor" />
 
-        <!-- Inner ears (accent blue) -->
-        <path d="M41 27 L35 16 L50 26 Z" fill="rgb(var(--accent))" opacity="0.85" />
-        <path d="M99 27 L105 16 L90 26 Z" fill="rgb(var(--accent))" opacity="0.85" />
+          <!-- Inner ears (accent blue) -->
+          <path d="M41 27 L35 16 L50 26 Z" fill="rgb(var(--accent))" opacity="0.85" />
+          <path d="M99 27 L105 16 L90 26 Z" fill="rgb(var(--accent))" opacity="0.85" />
 
-        <!-- Big ROUND eyes — each grouped for a clean blink.
-             Round pupil (not an ellipse) = kawaii, not realistic slit. -->
-        <g class="cat-eye">
-          <circle cx="54" cy="58" r="7" fill="rgb(var(--bg))" />
-          <circle cx="54" cy="58" r="3.2" fill="currentColor" />
-          <circle cx="55.5" cy="56" r="2" fill="rgb(var(--bg))" />
-          <circle cx="52.5" cy="60.5" r="0.9" fill="rgb(var(--bg))" />
-        </g>
-        <g class="cat-eye">
-          <circle cx="86" cy="58" r="7" fill="rgb(var(--bg))" />
-          <circle cx="86" cy="58" r="3.2" fill="currentColor" />
-          <circle cx="87.5" cy="56" r="2" fill="rgb(var(--bg))" />
-          <circle cx="84.5" cy="60.5" r="0.9" fill="rgb(var(--bg))" />
-        </g>
+          <!-- Big ROUND eyes — each grouped for a clean blink.
+               Round pupil (not an ellipse) = kawaii, not realistic slit. -->
+          <g class="cat-eye" id="cat-eye-left">
+            <circle cx="54" cy="58" r="7" fill="rgb(var(--bg))" />
+            <circle class="cat-pupil" cx="54" cy="58" r="3.2" fill="currentColor" />
+            <circle class="cat-pupil-highlight" cx="55.5" cy="56" r="2" fill="rgb(var(--bg))" />
+            <circle class="cat-pupil-highlight-sm" cx="52.5" cy="60.5" r="0.9" fill="rgb(var(--bg))" />
+          </g>
+          <g class="cat-eye" id="cat-eye-right">
+            <circle cx="86" cy="58" r="7" fill="rgb(var(--bg))" />
+            <circle class="cat-pupil" cx="86" cy="58" r="3.2" fill="currentColor" />
+            <circle class="cat-pupil-highlight" cx="87.5" cy="56" r="2" fill="rgb(var(--bg))" />
+            <circle class="cat-pupil-highlight-sm" cx="84.5" cy="60.5" r="0.9" fill="rgb(var(--bg))" />
+          </g>
 
-        <!-- Blush cheeks (soft blue) -->
-        <ellipse cx="38" cy="70" rx="6" ry="3.5" fill="rgb(var(--accent))" opacity="0.35" />
-        <ellipse cx="102" cy="70" rx="6" ry="3.5" fill="rgb(var(--accent))" opacity="0.35" />
+          <!-- Blush cheeks (soft blue) -->
+          <ellipse cx="38" cy="70" rx="6" ry="3.5" fill="rgb(var(--accent))" opacity="0.35" />
+          <ellipse cx="102" cy="70" rx="6" ry="3.5" fill="rgb(var(--accent))" opacity="0.35" />
 
-        <!-- Nose -->
-        <path d="M67 68 L73 68 L70 72 Z" fill="rgb(var(--accent))" />
+          <!-- Nose -->
+          <path d="M67 68 L73 68 L70 72 Z" fill="rgb(var(--accent))" />
 
-        <!-- Mouth: tight two-curve smile, pulled up for a rounder face -->
-        <path d="M70 72 Q66 76 62 73" fill="none" stroke="rgb(var(--bg))" stroke-width="1.8" stroke-linecap="round" />
-        <path d="M70 72 Q74 76 78 73" fill="none" stroke="rgb(var(--bg))" stroke-width="1.8" stroke-linecap="round" />
+          <!-- Mouth: tight two-curve smile, pulled up for a rounder face -->
+          <path d="M70 72 Q66 76 62 73" fill="none" stroke="rgb(var(--bg))" stroke-width="1.8" stroke-linecap="round" />
+          <path d="M70 72 Q74 76 78 73" fill="none" stroke="rgb(var(--bg))" stroke-width="1.8" stroke-linecap="round" />
 
-        <!-- Whiskers -->
-        <g stroke="rgb(var(--muted))" stroke-width="1" stroke-linecap="round" opacity="0.6">
-          <line x1="36" y1="69" x2="18" y2="65" />
-          <line x1="36" y1="72" x2="18" y2="75" />
-          <line x1="104" y1="69" x2="122" y2="65" />
-          <line x1="104" y1="72" x2="122" y2="75" />
+          <!-- Whiskers -->
+          <g stroke="rgb(var(--muted))" stroke-width="1" stroke-linecap="round" opacity="0.6">
+            <line x1="36" y1="69" x2="18" y2="65" />
+            <line x1="36" y1="72" x2="18" y2="75" />
+            <line x1="104" y1="69" x2="122" y2="65" />
+            <line x1="104" y1="72" x2="122" y2="75" />
+          </g>
         </g>
       </svg>
+      <!-- Floating text container for click reactions -->
+      <div id="cat-float-text" class="pointer-events-none absolute top-0 left-1/2 -translate-x-1/2 text-sm font-medium text-accent opacity-0 select-none whitespace-nowrap" style="transition: none;"></div>
     </div>
   </div>
 </section>
+
+<script>
+  function initCatInteractions(): void {
+    const container = document.getElementById("cat-container");
+    if (!container || container.dataset.bound === "true") return;
+    container.dataset.bound = "true";
+
+    // Respect prefers-reduced-motion
+    const prefersReduced = window.matchMedia(
+      "(prefers-reduced-motion: reduce)",
+    ).matches;
+    if (prefersReduced) return;
+
+    const svg = document.getElementById("cat-svg") as unknown as SVGSVGElement | null;
+    if (!svg) return;
+
+    // --- Element references ---
+    const leftPupil = svg.querySelector<SVGCircleElement>("#cat-eye-left .cat-pupil");
+    const leftHighlight = svg.querySelector<SVGCircleElement>("#cat-eye-left .cat-pupil-highlight");
+    const leftHighlightSm = svg.querySelector<SVGCircleElement>("#cat-eye-left .cat-pupil-highlight-sm");
+    const rightPupil = svg.querySelector<SVGCircleElement>("#cat-eye-right .cat-pupil");
+    const rightHighlight = svg.querySelector<SVGCircleElement>("#cat-eye-right .cat-pupil-highlight");
+    const rightHighlightSm = svg.querySelector<SVGCircleElement>("#cat-eye-right .cat-pupil-highlight-sm");
+    const head = document.getElementById("cat-head");
+    const earLeft = document.getElementById("cat-ear-left");
+    const earRight = document.getElementById("cat-ear-right");
+    const floatText = document.getElementById("cat-float-text");
+
+    if (!leftPupil || !rightPupil || !head || !floatText) return;
+
+    // --- Base positions for pupils (SVG coords) ---
+    const leftEyeBase = { cx: 54, cy: 58 };
+    const rightEyeBase = { cx: 86, cy: 58 };
+    const leftHighlightBase = { cx: 55.5, cy: 56 };
+    const leftHighlightSmBase = { cx: 52.5, cy: 60.5 };
+    const rightHighlightBase = { cx: 87.5, cy: 56 };
+    const rightHighlightSmBase = { cx: 84.5, cy: 60.5 };
+
+    // Max pixel offset for pupil tracking (in SVG units)
+    const MAX_OFFSET = 2.5;
+
+    // --- State ---
+    let clickCount = 0;
+    let lastInteraction = Date.now();
+    let idleTimer: ReturnType<typeof setInterval> | null = null;
+    let isHovering = false;
+    let hoverAnim: Animation | null = null;
+
+    // --- 1. Eye tracking ---
+    function updatePupils(clientX: number, clientY: number): void {
+      const rect = svg!.getBoundingClientRect();
+      // Map SVG viewBox to screen coords: viewBox is 0-140, element is rect
+      const scaleX = rect.width / 140;
+      const scaleY = rect.height / 140;
+
+      // Calculate center of each eye in screen coords
+      const leftScreenX = rect.left + leftEyeBase.cx * scaleX;
+      const leftScreenY = rect.top + leftEyeBase.cy * scaleY;
+      const rightScreenX = rect.left + rightEyeBase.cx * scaleX;
+      const rightScreenY = rect.top + rightEyeBase.cy * scaleY;
+
+      // For each eye: angle + clamped offset
+      for (const eye of [
+        {
+          sx: leftScreenX, sy: leftScreenY,
+          pupil: leftPupil!, base: leftEyeBase,
+          hl: leftHighlight, hlBase: leftHighlightBase,
+          hlSm: leftHighlightSm, hlSmBase: leftHighlightSmBase,
+        },
+        {
+          sx: rightScreenX, sy: rightScreenY,
+          pupil: rightPupil!, base: rightEyeBase,
+          hl: rightHighlight, hlBase: rightHighlightBase,
+          hlSm: rightHighlightSm, hlSmBase: rightHighlightSmBase,
+        },
+      ]) {
+        const dx = clientX - eye.sx;
+        const dy = clientY - eye.sy;
+        const dist = Math.sqrt(dx * dx + dy * dy);
+        // Normalize and clamp
+        const factor = Math.min(dist / 120, 1); // ease into max offset
+        const offsetX = (dx / (dist || 1)) * MAX_OFFSET * factor;
+        const offsetY = (dy / (dist || 1)) * MAX_OFFSET * factor;
+
+        eye.pupil.setAttribute("cx", String(eye.base.cx + offsetX));
+        eye.pupil.setAttribute("cy", String(eye.base.cy + offsetY));
+        if (eye.hl) {
+          eye.hl.setAttribute("cx", String(eye.hlBase.cx + offsetX));
+          eye.hl.setAttribute("cy", String(eye.hlBase.cy + offsetY));
+        }
+        if (eye.hlSm) {
+          eye.hlSm.setAttribute("cx", String(eye.hlSmBase.cx + offsetX));
+          eye.hlSm.setAttribute("cy", String(eye.hlSmBase.cy + offsetY));
+        }
+      }
+    }
+
+    function onMouseMove(e: MouseEvent): void {
+      lastInteraction = Date.now();
+      updatePupils(e.clientX, e.clientY);
+    }
+    document.addEventListener("mousemove", onMouseMove);
+
+    // --- 2. Click reactions ---
+    const phrases = ["meow!", "purr~", "mrrp?", ":3", "nya~"];
+    const specialMessage = "okay i love you too";
+
+    function showFloatingText(text: string): void {
+      floatText!.textContent = text;
+      // Cancel any ongoing animation
+      floatText!.getAnimations().forEach((a) => a.cancel());
+      floatText!.animate(
+        [
+          { opacity: 1, transform: "translate(-50%, 0px)" },
+          { opacity: 0, transform: "translate(-50%, -24px)" },
+        ],
+        { duration: 1200, easing: "ease-out", fill: "forwards" },
+      );
+    }
+
+    function jumpCat(): void {
+      svg!.animate(
+        [
+          { transform: "translateY(0)" },
+          { transform: "translateY(-8px)" },
+          { transform: "translateY(0)" },
+        ],
+        { duration: 350, easing: "cubic-bezier(0.34, 1.56, 0.64, 1)" },
+      );
+    }
+
+    function onCatClick(): void {
+      lastInteraction = Date.now();
+      clickCount++;
+      jumpCat();
+
+      if (clickCount === 10) {
+        showFloatingText(specialMessage);
+      } else {
+        const msg = phrases[Math.floor(Math.random() * phrases.length)];
+        showFloatingText(msg);
+      }
+    }
+    container.addEventListener("click", onCatClick);
+    container.style.cursor = "pointer";
+
+    // --- 3. Idle animations ---
+    function doHeadTilt(): void {
+      head!.style.transformBox = "fill-box";
+      head!.style.transformOrigin = "center bottom";
+      head!.animate(
+        [
+          { transform: "rotate(0deg)" },
+          { transform: "rotate(5deg)" },
+          { transform: "rotate(0deg)" },
+        ],
+        { duration: 800, easing: "ease-in-out" },
+      );
+    }
+
+    function doEarTwitch(): void {
+      const ear = Math.random() > 0.5 ? earLeft : earRight;
+      if (!ear) return;
+      ear.style.transformBox = "fill-box";
+      ear.style.transformOrigin = "center bottom";
+      ear.animate(
+        [
+          { transform: "scaleY(1)" },
+          { transform: "scaleY(1.18)" },
+          { transform: "scaleY(1)" },
+        ],
+        { duration: 300, easing: "ease-in-out" },
+      );
+    }
+
+    function checkIdle(): void {
+      if (Date.now() - lastInteraction < 7500) return;
+      if (isHovering) return;
+      if (Math.random() > 0.5) {
+        doHeadTilt();
+      } else {
+        doEarTwitch();
+      }
+      // Reset so we don't fire every tick while idle
+      lastInteraction = Date.now();
+    }
+
+    idleTimer = setInterval(checkIdle, 8000);
+
+    // --- 4. Hover purr effect ---
+    function onMouseEnter(): void {
+      isHovering = true;
+      lastInteraction = Date.now();
+      hoverAnim = svg!.animate(
+        [
+          { transform: "scale(1)" },
+          { transform: "scale(1.03)" },
+          { transform: "scale(1)" },
+        ],
+        {
+          duration: 1400,
+          easing: "ease-in-out",
+          iterations: Infinity,
+        },
+      );
+    }
+
+    function onMouseLeave(): void {
+      isHovering = false;
+      lastInteraction = Date.now();
+      if (hoverAnim) {
+        hoverAnim.cancel();
+        hoverAnim = null;
+      }
+    }
+
+    container.addEventListener("mouseenter", onMouseEnter);
+    container.addEventListener("mouseleave", onMouseLeave);
+
+    // --- Cleanup on page transition ---
+    function cleanup(): void {
+      document.removeEventListener("mousemove", onMouseMove);
+      container!.removeEventListener("click", onCatClick);
+      container!.removeEventListener("mouseenter", onMouseEnter);
+      container!.removeEventListener("mouseleave", onMouseLeave);
+      if (idleTimer) clearInterval(idleTimer);
+      if (hoverAnim) hoverAnim.cancel();
+      document.removeEventListener("astro:before-swap", cleanup);
+    }
+    document.addEventListener("astro:before-swap", cleanup, { once: true });
+  }
+
+  // Run on initial load and on each view transition
+  document.addEventListener("astro:page-load", initCatInteractions);
+</script>
+
+<style>
+  /* Blinking cursor for typing effect */
+  .hero-cursor {
+    color: rgb(var(--accent));
+    font-weight: 400;
+    animation: hero-cursor-blink 530ms step-end infinite;
+  }
+
+  .hero-cursor.hero-cursor--fade {
+    animation: hero-cursor-blink 530ms step-end 3, hero-cursor-fade 1590ms step-end forwards;
+  }
+
+  .hero-cursor.hero-cursor--hidden {
+    opacity: 0;
+  }
+
+  @keyframes hero-cursor-blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
+  }
+
+  @keyframes hero-cursor-fade {
+    0%, 99% { opacity: 1; }
+    100% { opacity: 0; }
+  }
+
+  /* Staggered elements hidden until typing finishes */
+  .hero-stagger-hidden {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+
+  /* When reduced motion is preferred, skip all custom animations */
+  @media (prefers-reduced-motion: reduce) {
+    .hero-stagger-hidden {
+      opacity: 1;
+      transform: none;
+    }
+
+    .hero-cursor {
+      animation: none;
+      opacity: 0;
+    }
+  }
+</style>
+
+<script>
+  function initTypingEffect(): void {
+    const typedEl = document.getElementById("hero-typed");
+    const cursorEl = document.getElementById("hero-cursor");
+    const heading = document.getElementById("hero-heading");
+    const bio = document.getElementById("hero-bio");
+    const cta = document.getElementById("hero-cta");
+
+    if (!typedEl || !cursorEl) return;
+
+    // Respect prefers-reduced-motion: show everything immediately
+    const prefersReduced = window.matchMedia(
+      "(prefers-reduced-motion: reduce)",
+    ).matches;
+
+    const text = "hi there,";
+
+    if (prefersReduced) {
+      typedEl.textContent = text;
+      cursorEl.classList.add("hero-cursor--hidden");
+      // Show staggered elements immediately
+      for (const el of [heading, bio, cta]) {
+        if (!el) continue;
+        el.classList.remove("hero-stagger-hidden");
+        el.classList.add("animate-fade-up");
+      }
+      return;
+    }
+
+    // Reset state for view transitions
+    typedEl.textContent = "";
+    cursorEl.classList.remove("hero-cursor--fade", "hero-cursor--hidden");
+
+    // Remove animate-fade-up from staggered elements and re-hide them
+    for (const el of [heading, bio, cta]) {
+      if (!el) continue;
+      el.classList.remove("animate-fade-up");
+      el.classList.add("hero-stagger-hidden");
+    }
+
+    const charDelay = 80;
+    let i = 0;
+
+    function typeNext(): void {
+      if (i < text.length) {
+        typedEl!.textContent += text[i];
+        i++;
+        setTimeout(typeNext, charDelay);
+      } else {
+        onTypingComplete();
+      }
+    }
+
+    function onTypingComplete(): void {
+      // Start cursor fade-out (blinks 3 more times then disappears)
+      cursorEl!.classList.add("hero-cursor--fade");
+
+      // Stagger in the remaining hero elements after typing
+      const staggerEls = [heading, bio, cta];
+      const baseDelay = 100; // ms after typing completes before first element appears
+      const staggerStep = 120; // ms between each element
+
+      staggerEls.forEach((el, index) => {
+        if (!el) return;
+        setTimeout(() => {
+          el.classList.remove("hero-stagger-hidden");
+          el.classList.add("animate-fade-up");
+        }, baseDelay + index * staggerStep);
+      });
+
+      // After cursor fade animation ends, hide it completely
+      cursorEl!.addEventListener(
+        "animationend",
+        () => {
+          cursorEl!.classList.add("hero-cursor--hidden");
+        },
+        { once: true },
+      );
+    }
+
+    // Small initial delay before typing starts (feels more natural)
+    setTimeout(typeNext, 200);
+  }
+
+  // Run on initial load and on each view transition
+  document.addEventListener("astro:page-load", initTypingEffect);
+</script>
