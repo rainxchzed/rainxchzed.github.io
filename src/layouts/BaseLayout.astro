@@ -5,6 +5,7 @@ import Footer from '../components/Footer.astro';
 import Analytics from '../components/Analytics.astro';
 import CursorGlow from '../components/CursorGlow.astro';
 import EasterEggs from '../components/EasterEggs.astro';
+import Interactions from '../components/Interactions.astro';
 import { ClientRouter } from 'astro:transitions';
 
 interface Props {
@@ -78,5 +79,6 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
     <CursorGlow />
     <Analytics />
     <EasterEggs />
+    <Interactions />
   </body>
 </html>

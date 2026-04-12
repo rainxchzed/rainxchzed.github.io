@@ -1,0 +1,92 @@
+---
+// Global interaction scripts: parallax scrolling + 3D card tilt.
+// Imported in BaseLayout.astro, runs on every page.
+---
+
+<script>
+  function initInteractions(): void {
+    if (document.documentElement.dataset.interactionsBound === 'true') return;
+    document.documentElement.dataset.interactionsBound = 'true';
+
+    const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const isTouchDevice =
+      'ontouchstart' in window || window.matchMedia('(hover: none)').matches;
+
+    // ---- Parallax scrolling ----
+    if (!prefersReduced && !isTouchDevice) {
+      const parallaxElements = document.querySelectorAll<HTMLElement>('[data-parallax]');
+
+      if (parallaxElements.length > 0) {
+        let ticking = false;
+
+        function updateParallax(): void {
+          const scrollY = window.scrollY;
+          const vh = window.innerHeight;
+
+          parallaxElements.forEach((el) => {
+            const speed = parseFloat(el.dataset.parallax || '0');
+            if (speed === 0) return;
+
+            const rect = el.getBoundingClientRect();
+            const elementCenter = rect.top + rect.height / 2;
+            // How far the element center is from the viewport center, normalized
+            const distFromCenter = (elementCenter - vh / 2) / vh;
+            const offset = distFromCenter * speed * -40;
+
+            el.style.transform = `translate3d(0, ${offset}px, 0)`;
+          });
+
+          ticking = false;
+        }
+
+        window.addEventListener(
+          'scroll',
+          () => {
+            if (!ticking) {
+              ticking = true;
+              requestAnimationFrame(updateParallax);
+            }
+          },
+          { passive: true },
+        );
+
+        // Initial calculation
+        updateParallax();
+      }
+    }
+
+    // ---- 3D card tilt ----
+    if (!prefersReduced && !isTouchDevice) {
+      const cards = document.querySelectorAll<HTMLElement>('.card-tilt');
+
+      cards.forEach((card) => {
+        if (card.dataset.tiltBound === 'true') return;
+        card.dataset.tiltBound = 'true';
+
+        card.addEventListener('mousemove', (e: MouseEvent) => {
+          const rect = card.getBoundingClientRect();
+          const x = (e.clientX - rect.left) / rect.width - 0.5; // -0.5 to 0.5
+          const y = (e.clientY - rect.top) / rect.height - 0.5;
+
+          card.style.transform = `perspective(700px) rotateY(${x * 6}deg) rotateX(${-y * 6}deg) scale3d(1.02, 1.02, 1.02)`;
+          card.style.transition = 'transform 0.1s ease-out';
+        });
+
+        card.addEventListener('mouseleave', () => {
+          card.style.transform =
+            'perspective(700px) rotateY(0) rotateX(0) scale3d(1, 1, 1)';
+          card.style.transition =
+            'transform 0.35s cubic-bezier(0.03, 0.98, 0.52, 0.99)';
+        });
+      });
+    }
+  }
+
+  // Reset bound flag on navigation so we re-init for new page elements
+  document.addEventListener('astro:before-swap', () => {
+    document.documentElement.dataset.interactionsBound = 'false';
+  });
+
+  initInteractions();
+  document.addEventListener('astro:page-load', initInteractions);
+</script>

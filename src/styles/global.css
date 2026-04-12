@@ -160,6 +160,159 @@
   }
 }
 
+/* ---------- Hover Micro-interactions ---------- */
+
+/* 3D card tilt — driven by JS, smooth spring-back on leave */
+.card-tilt {
+  transform-style: preserve-3d;
+  transition: transform 0.35s cubic-bezier(0.03, 0.98, 0.52, 0.99);
+}
+
+/* Shine sweep on card hover */
+.card-shine {
+  position: relative;
+  overflow: hidden;
+}
+.card-shine::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    105deg,
+    transparent 38%,
+    rgb(var(--accent) / 0.06) 44%,
+    rgb(var(--accent) / 0.12) 50%,
+    rgb(var(--accent) / 0.06) 56%,
+    transparent 62%
+  );
+  transform: translateX(-110%);
+  transition: transform 0.65s ease;
+  z-index: 1;
+  pointer-events: none;
+  border-radius: inherit;
+}
+.card-shine:hover::before {
+  transform: translateX(110%);
+}
+
+/* Icon hover — spin full 360 */
+.hover-spin > svg,
+.hover-spin > span > svg {
+  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.hover-spin:hover > svg,
+.hover-spin:hover > span > svg {
+  transform: rotate(360deg);
+}
+
+/* Icon hover — wiggle */
+.hover-wiggle > svg,
+.hover-wiggle > span > svg {
+  transition: transform 0.3s ease;
+}
+.hover-wiggle:hover > svg,
+.hover-wiggle:hover > span > svg {
+  animation: wiggle 0.5s ease;
+}
+@keyframes wiggle {
+  0%, 100% { transform: rotate(0deg); }
+  20% { transform: rotate(-12deg); }
+  40% { transform: rotate(10deg); }
+  60% { transform: rotate(-6deg); }
+  80% { transform: rotate(4deg); }
+}
+
+/* Icon hover — bounce up */
+.hover-bounce > svg,
+.hover-bounce > span > svg {
+  transition: transform 0.3s ease;
+}
+.hover-bounce:hover > svg,
+.hover-bounce:hover > span > svg {
+  animation: bounce-up 0.45s ease;
+}
+@keyframes bounce-up {
+  0%, 100% { transform: translateY(0); }
+  35% { transform: translateY(-5px); }
+  55% { transform: translateY(-2px); }
+}
+
+/* Icon hover — pulse scale */
+.hover-pulse > svg,
+.hover-pulse > span > svg {
+  transition: transform 0.3s ease;
+}
+.hover-pulse:hover > svg,
+.hover-pulse:hover > span > svg {
+  animation: pulse-scale 0.5s ease;
+}
+@keyframes pulse-scale {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.2); }
+}
+
+/* Nav animated underline */
+.nav-underline {
+  position: relative;
+}
+.nav-underline::after {
+  content: '';
+  position: absolute;
+  bottom: -3px;
+  left: 0;
+  width: 0;
+  height: 1.5px;
+  background-color: rgb(var(--accent));
+  transition: width 0.25s ease;
+  border-radius: 1px;
+}
+.nav-underline:hover::after {
+  width: 100%;
+}
+
+/* Tag hover */
+.tag-interactive {
+  transition: transform 0.2s ease, background-color 0.2s ease;
+  cursor: default;
+}
+.tag-interactive:hover {
+  transform: scale(1.1);
+  background-color: rgb(var(--accent) / 0.2);
+}
+
+/* Star icon spin on card hover */
+.star-icon {
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.group:hover .star-icon {
+  transform: rotate(72deg) scale(1.15);
+}
+
+/* Footer link underline */
+.link-underline {
+  position: relative;
+}
+.link-underline::after {
+  content: '';
+  position: absolute;
+  bottom: -1px;
+  left: 0;
+  width: 0;
+  height: 1px;
+  background-color: rgb(var(--accent));
+  transition: width 0.2s ease;
+}
+.link-underline:hover::after {
+  width: 100%;
+}
+
+/* ---------- Parallax ---------- */
+
+/* Elements with data-parallax are transformed by JS based on scroll position */
+[data-parallax] {
+  will-change: transform;
+}
+
 /* View transition theming — for smooth theme swap */
 ::view-transition-old(root),
 ::view-transition-new(root) {
