@@ -1,0 +1,347 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dashboard — rainxchzed admin</title>
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" />
+  <style>
+    :root {
+      --accent: #38bdf8;
+      --accent-hover: #0ea5e9;
+      --bg: #fafafa;
+      --bg-elevated: #ffffff;
+      --fg: #0a0a0a;
+      --muted: #737373;
+      --border: #e5e5e5;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --accent: #7dd3fc;
+        --accent-hover: #38bdf8;
+        --bg: #0a0a0a;
+        --bg-elevated: #171717;
+        --fg: #fafafa;
+        --muted: #a3a3a3;
+        --border: #262626;
+      }
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      background: var(--bg);
+      color: var(--fg);
+      font-family: "Inter", ui-sans-serif, system-ui, sans-serif;
+      -webkit-font-smoothing: antialiased;
+      min-height: 100vh;
+    }
+
+    .container {
+      max-width: 64rem;
+      margin: 0 auto;
+      padding: 2rem 1.5rem;
+    }
+
+    /* Header */
+    .header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 2.5rem;
+    }
+
+    .header h1 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      letter-spacing: -0.025em;
+    }
+
+    .header h1 span { color: var(--accent); }
+
+    .header-links {
+      display: flex;
+      gap: 0.75rem;
+    }
+
+    .header-links a {
+      font-size: 0.8125rem;
+      color: var(--muted);
+      text-decoration: none;
+      padding: 0.375rem 0.75rem;
+      border: 1px solid var(--border);
+      border-radius: 0.5rem;
+      background: var(--bg-elevated);
+      transition: color 0.15s, border-color 0.15s;
+    }
+
+    .header-links a:hover {
+      color: var(--accent);
+      border-color: var(--accent);
+    }
+
+    /* Cards grid */
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+
+    .card {
+      background: var(--bg-elevated);
+      border: 1px solid var(--border);
+      border-radius: 0.75rem;
+      padding: 1.25rem;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+
+    .card:hover {
+      border-color: var(--accent);
+      transform: translateY(-2px);
+    }
+
+    .card-header {
+      display: flex;
+      align-items: center;
+      gap: 0.625rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .card-icon {
+      width: 2rem;
+      height: 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 0.5rem;
+      background: color-mix(in srgb, var(--accent) 12%, transparent);
+      color: var(--accent);
+    }
+
+    .card-icon svg { width: 1rem; height: 1rem; }
+
+    .card-title {
+      font-size: 0.9375rem;
+      font-weight: 600;
+    }
+
+    .card-desc {
+      font-size: 0.8125rem;
+      color: var(--muted);
+      line-height: 1.5;
+      margin-bottom: 1rem;
+    }
+
+    .card-action {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.375rem;
+      font-size: 0.8125rem;
+      font-weight: 500;
+      color: var(--accent);
+      text-decoration: none;
+      transition: color 0.15s;
+    }
+
+    .card-action:hover { color: var(--accent-hover); }
+    .card-action svg { width: 0.75rem; height: 0.75rem; }
+
+    /* Analytics embed section */
+    .analytics-section {
+      margin-top: 1rem;
+    }
+
+    .analytics-section h2 {
+      font-size: 1.125rem;
+      font-weight: 600;
+      margin-bottom: 1rem;
+    }
+
+    .analytics-frame {
+      background: var(--bg-elevated);
+      border: 1px solid var(--border);
+      border-radius: 0.75rem;
+      overflow: hidden;
+      min-height: 500px;
+    }
+
+    .analytics-frame iframe {
+      width: 100%;
+      height: 600px;
+      border: none;
+      background: var(--bg-elevated);
+    }
+
+    .analytics-note {
+      margin-top: 0.75rem;
+      font-size: 0.75rem;
+      color: var(--muted);
+    }
+
+    /* Quick actions */
+    .quick-action-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.625rem 1.25rem;
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: var(--fg);
+      background: var(--bg-elevated);
+      border: 1px solid var(--border);
+      border-radius: 0.5rem;
+      text-decoration: none;
+      transition: all 0.2s;
+    }
+
+    .quick-action-btn:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+      transform: translateY(-1px);
+    }
+
+    .quick-action-btn.primary {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: #0a0a0a;
+    }
+
+    .quick-action-btn.primary:hover {
+      background: var(--accent-hover);
+      border-color: var(--accent-hover);
+      color: #0a0a0a;
+    }
+
+    .quick-actions {
+      display: flex;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+      margin-bottom: 2rem;
+    }
+
+    /* Footer */
+    .footer {
+      margin-top: 3rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid var(--border);
+      font-size: 0.75rem;
+      color: var(--muted);
+      text-align: center;
+    }
+
+    .footer a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <h1><span>rainxchzed</span> admin</h1>
+      <div class="header-links">
+        <a href="/admin/">Editor</a>
+        <a href="/">View site</a>
+      </div>
+    </div>
+
+    <div class="quick-actions">
+      <a href="/admin/#/collections/blog/new" class="quick-action-btn primary">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
+        New post
+      </a>
+      <a href="/admin/#/collections/blog" class="quick-action-btn">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M16 13H8M16 17H8M10 9H8"/></svg>
+        All posts
+      </a>
+      <a href="/admin/#/workflow" class="quick-action-btn">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
+        Workflow
+      </a>
+    </div>
+
+    <div class="grid">
+      <div class="card">
+        <div class="card-header">
+          <div class="card-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M17 8l-5-5-5 5M12 3v12"/></svg>
+          </div>
+          <span class="card-title">Analytics</span>
+        </div>
+        <p class="card-desc">Visitor stats, page views, and traffic sources. Privacy-friendly, cookie-free.</p>
+        <a href="https://rainxchzed.goatcounter.com" target="_blank" rel="noopener" class="card-action">
+          Open GoatCounter dashboard
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M7 17l10-10M7 7h10v10"/></svg>
+        </a>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <div class="card-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+          </div>
+          <span class="card-title">Comments</span>
+        </div>
+        <p class="card-desc">Manage reader comments via GitHub Discussions. Moderate, reply, and pin threads.</p>
+        <a href="https://github.com/rainxchzed/rainxchzed.github.io/discussions" target="_blank" rel="noopener" class="card-action">
+          Open Discussions
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M7 17l10-10M7 7h10v10"/></svg>
+        </a>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <div class="card-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 7L2 7"/></svg>
+          </div>
+          <span class="card-title">Newsletter</span>
+        </div>
+        <p class="card-desc">View subscribers, send emails, and manage your mailing list on Buttondown.</p>
+        <a href="https://buttondown.com/rainxchzed" target="_blank" rel="noopener" class="card-action">
+          Open Buttondown
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M7 17l10-10M7 7h10v10"/></svg>
+        </a>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <div class="card-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+          </div>
+          <span class="card-title">Deployments</span>
+        </div>
+        <p class="card-desc">Check build status, view deploy logs, and monitor GitHub Actions runs.</p>
+        <a href="https://github.com/rainxchzed/rainxchzed.github.io/actions" target="_blank" rel="noopener" class="card-action">
+          Open Actions
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M7 17l10-10M7 7h10v10"/></svg>
+        </a>
+      </div>
+    </div>
+
+    <div class="analytics-section">
+      <h2>Visitor analytics</h2>
+      <div class="analytics-frame">
+        <iframe
+          src="https://rainxchzed.goatcounter.com"
+          title="GoatCounter Analytics"
+          loading="lazy"
+          referrerpolicy="no-referrer"
+        ></iframe>
+      </div>
+      <p class="analytics-note">
+        Powered by GoatCounter — privacy-friendly, cookie-free analytics.
+        <a href="https://rainxchzed.goatcounter.com" target="_blank" rel="noopener">Open full dashboard</a>
+      </p>
+    </div>
+
+    <div class="footer">
+      <p>rainxchzed admin &middot; <a href="/">back to site</a></p>
+    </div>
+  </div>
+</body>
+</html>

@@ -5,9 +5,13 @@ backend:
   base_url: https://rainxchzedblog.rainxchzed.workers.dev
 
 site_url: https://rainxchzed.dev
+publish_mode: editorial_workflow
 
 media_folder: public/uploads
 public_folder: /uploads
+media_library:
+  max_file_size: 5242880
+  folder_support: true
 
 collections:
   - name: blog
@@ -19,9 +23,11 @@ collections:
     extension: md
     format: frontmatter
     sortable_fields: ["date", "title"]
+    summary: "{{title}} — {{date}}"
+    preview_path: "posts/{{slug}}"
     fields:
       - { name: title, label: Title, widget: string }
-      - { name: description, label: Description, widget: string, required: false }
+      - { name: description, label: Description, widget: string, required: false, hint: "One-sentence summary for previews and RSS." }
       - { name: date, label: Date, widget: datetime, format: "YYYY-MM-DD", date_format: "YYYY-MM-DD", time_format: false }
       - name: tags
         label: Tags
