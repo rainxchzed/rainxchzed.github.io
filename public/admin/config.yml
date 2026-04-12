@@ -9,10 +9,6 @@ publish_mode: editorial_workflow
 
 media_folder: public/uploads
 public_folder: /uploads
-media_library:
-  name: default
-  max_file_size: 5242880
-  folder_support: true
 
 collections:
   - name: blog
