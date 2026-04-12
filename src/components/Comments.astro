@@ -1,0 +1,80 @@
+---
+// Giscus comment widget — loads via script tag, respects dark/light theme,
+// and re-initializes on Astro view transitions.
+---
+
+<section class="giscus-wrapper mt-2">
+  <div class="giscus"></div>
+</section>
+
+<script>
+  function loadGiscus() {
+    const container = document.querySelector('.giscus') as HTMLElement | null;
+    if (!container) return;
+
+    // Clear any previous giscus iframe (handles view-transition re-init)
+    container.innerHTML = '';
+
+    const isDark = document.documentElement.classList.contains('dark');
+
+    const script = document.createElement('script');
+    script.src = 'https://giscus.app/client.js';
+    script.setAttribute('data-repo', 'rainxchzed/rainxchzed.github.io');
+    script.setAttribute('data-repo-id', 'R_kgDOR_9_JA');
+    script.setAttribute('data-category', 'General');
+    script.setAttribute('data-category-id', 'DIC_kwDOR_9_JM4C6poe');
+    script.setAttribute('data-mapping', 'pathname');
+    script.setAttribute('data-strict', '0');
+    script.setAttribute('data-reactions-enabled', '1');
+    script.setAttribute('data-emit-metadata', '0');
+    script.setAttribute('data-input-position', 'top');
+    script.setAttribute('data-theme', isDark ? 'dark' : 'light');
+    script.setAttribute('data-lang', 'en');
+    script.setAttribute('data-loading', 'lazy');
+    script.crossOrigin = 'anonymous';
+    script.async = true;
+
+    container.appendChild(script);
+  }
+
+  /** Send a theme change message to the giscus iframe. */
+  function setGiscusTheme(theme: 'dark' | 'light') {
+    const iframe = document.querySelector<HTMLIFrameElement>(
+      'iframe.giscus-frame',
+    );
+    if (!iframe?.contentWindow) return;
+    iframe.contentWindow.postMessage(
+      { giscus: { setConfig: { theme } } },
+      'https://giscus.app',
+    );
+  }
+
+  /**
+   * Watch for `.dark` class changes on <html> so we can sync the giscus
+   * theme when the user toggles dark/light mode. The theme toggle in this
+   * project does not emit a custom event, so a MutationObserver is the most
+   * reliable approach.
+   */
+  let observer: MutationObserver | null = null;
+
+  function watchTheme() {
+    observer?.disconnect();
+    observer = new MutationObserver(() => {
+      const isDark = document.documentElement.classList.contains('dark');
+      setGiscusTheme(isDark ? 'dark' : 'light');
+    });
+    observer.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ['class'],
+    });
+  }
+
+  function init() {
+    loadGiscus();
+    watchTheme();
+  }
+
+  // Initial load + view-transition re-init
+  init();
+  document.addEventListener('astro:page-load', init);
+</script>

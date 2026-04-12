@@ -1,5 +1,6 @@
 ---
 import BaseLayout from './BaseLayout.astro';
+import Comments from '../components/Comments.astro';
 
 interface Props {
   title: string;
@@ -46,6 +47,13 @@ const formattedDate = date.toLocaleDateString('en-US', {
     <div class="prose-custom animate-fade-up delay-200">
       <slot />
     </div>
+
+    <hr class="my-12 border-t border-default" />
+
+    <section class="animate-fade-up">
+      <h2 class="font-serif text-xl font-semibold tracking-tight text-fg mb-6">Comments</h2>
+      <Comments />
+    </section>
   </article>
 </BaseLayout>
 

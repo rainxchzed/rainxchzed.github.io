@@ -1,0 +1,48 @@
+---
+/**
+ * Privacy-friendly analytics via GoatCounter.
+ * - Cookie-free, GDPR-compliant (no consent banner needed)
+ * - Only loads in production builds
+ * - Works with Astro view transitions (re-counts on astro:page-load)
+ *
+ * Override the default site code with the GOATCOUNTER_SITE_CODE env var
+ * or pass a `siteCode` prop.
+ */
+interface Props {
+  siteCode?: string;
+}
+
+const siteCode =
+  Astro.props.siteCode ??
+  import.meta.env.PUBLIC_GOATCOUNTER_SITE_CODE ??
+  'rainxchzed';
+---
+
+{import.meta.env.PROD && (
+  <>
+    {/* GoatCounter analytics — https://goatcounter.com */}
+    <script
+      is:inline
+      data-goatcounter={`https://${siteCode}.goatcounter.com/count`}
+      async
+      src="//gc.zgo.at/count.js"
+    ></script>
+
+    {/*
+      Re-count page views after view-transition navigations.
+      GoatCounter exposes window.goatcounter.count() once loaded;
+      we call it on every astro:page-load (which also fires on the
+      initial load, but the script tag already handles that one — GC
+      deduplicates by checking the last-sent path).
+    */}
+    <script is:inline>
+      document.addEventListener('astro:page-load', function () {
+        if (window.goatcounter && window.goatcounter.count) {
+          window.goatcounter.count({
+            path: location.pathname + location.search + location.hash,
+          });
+        }
+      });
+    </script>
+  </>
+)}
