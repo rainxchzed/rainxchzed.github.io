@@ -1,0 +1,47 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Hero from '../components/Hero.astro';
+import Projects from '../components/Projects.astro';
+import Contact from '../components/Contact.astro';
+import PostCard from '../components/PostCard.astro';
+import { getCollection } from 'astro:content';
+
+// Recent posts: sorted by date descending, top 3
+const allPosts = await getCollection('blog', ({ data }) => !data.draft);
+const recentPosts = allPosts
+  .sort((a, b) => b.data.date.getTime() - a.data.date.getTime())
+  .slice(0, 3);
+---
+
+<BaseLayout>
+  <div class="mx-auto max-w-3xl px-4 sm:px-6">
+    <Hero />
+
+    <section class="py-12">
+      <div class="flex items-baseline justify-between mb-6">
+        <h2 class="font-serif text-2xl font-semibold">recent posts</h2>
+        <a href="/posts" class="text-sm text-muted hover:text-accent transition-colors">
+          all →
+        </a>
+      </div>
+      {recentPosts.length === 0 ? (
+        <p class="text-sm text-muted italic">no posts yet — soon!</p>
+      ) : (
+        <div class="grid gap-3">
+          {recentPosts.map((post) => (
+            <PostCard
+              title={post.data.title}
+              description={post.data.description}
+              date={post.data.date}
+              href={`/posts/${post.id}`}
+            />
+          ))}
+        </div>
+      )}
+    </section>
+
+    <Projects />
+
+    <Contact />
+  </div>
+</BaseLayout>

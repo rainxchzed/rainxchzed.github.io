@@ -1,0 +1,173 @@
+---
+import BaseLayout from './BaseLayout.astro';
+
+interface Props {
+  title: string;
+  description?: string;
+  date: Date;
+  tags?: string[];
+}
+
+const { title, description, date, tags = [] } = Astro.props;
+
+const formattedDate = date.toLocaleDateString('en-US', {
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric',
+});
+---
+
+<BaseLayout title={`${title} — rainxchzed`} description={description}>
+  <article class="mx-auto max-w-2xl px-4 sm:px-6 py-12 md:py-16">
+    <header class="mb-10">
+      <a href="/posts" class="text-sm text-muted hover:text-accent transition-colors">
+        ← all posts
+      </a>
+      <h1 class="mt-4 font-serif text-3xl sm:text-4xl md:text-5xl font-semibold tracking-tight animate-fade-up break-words">
+        {title}
+      </h1>
+      <div class="mt-4 flex flex-wrap items-center gap-3 text-sm text-muted animate-fade-up delay-100">
+        <time datetime={date.toISOString()}>{formattedDate}</time>
+        {tags.length > 0 && (
+          <>
+            <span aria-hidden="true">·</span>
+            <div class="flex flex-wrap gap-1.5">
+              {tags.map((t) => (
+                <span class="inline-block text-xs bg-accent-soft px-2 py-0.5 rounded-full">
+                  {t}
+                </span>
+              ))}
+            </div>
+          </>
+        )}
+      </div>
+    </header>
+
+    <div class="prose-custom animate-fade-up delay-200">
+      <slot />
+    </div>
+  </article>
+</BaseLayout>
+
+<style is:global>
+  /* Hand-rolled prose styles — tuned for Fraunces serif body. */
+  .prose-custom {
+    font-family: var(--font-serif);
+    font-size: 1.0625rem;
+    line-height: 1.75;
+    color: rgb(var(--fg));
+  }
+
+  .prose-custom > * + * {
+    margin-top: 1.25em;
+  }
+
+  .prose-custom h2 {
+    font-family: var(--font-serif);
+    font-size: 1.5rem;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    margin-top: 2.25em;
+    margin-bottom: 0.5em;
+    color: rgb(var(--fg));
+  }
+
+  .prose-custom h3 {
+    font-family: var(--font-serif);
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin-top: 1.75em;
+    margin-bottom: 0.4em;
+    color: rgb(var(--fg));
+  }
+
+  .prose-custom p {
+    color: rgb(var(--fg) / 0.88);
+  }
+
+  .prose-custom a {
+    color: rgb(var(--accent));
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 3px;
+    transition: color 0.2s;
+  }
+
+  .prose-custom a:hover {
+    color: rgb(var(--accent-strong));
+  }
+
+  .prose-custom strong {
+    font-weight: 600;
+    color: rgb(var(--fg));
+  }
+
+  .prose-custom em {
+    font-style: italic;
+  }
+
+  .prose-custom ul,
+  .prose-custom ol {
+    padding-left: 1.5em;
+  }
+
+  .prose-custom ul {
+    list-style-type: disc;
+  }
+
+  .prose-custom ol {
+    list-style-type: decimal;
+  }
+
+  .prose-custom li {
+    margin-top: 0.4em;
+  }
+
+  .prose-custom li::marker {
+    color: rgb(var(--muted));
+  }
+
+  .prose-custom blockquote {
+    border-left: 3px solid rgb(var(--accent));
+    padding-left: 1em;
+    color: rgb(var(--muted));
+    font-style: italic;
+  }
+
+  .prose-custom code {
+    font-family: var(--font-mono);
+    font-size: 0.875em;
+    background-color: rgb(var(--accent) / 0.12);
+    color: rgb(var(--fg));
+    padding: 0.15em 0.4em;
+    border-radius: 0.25em;
+  }
+
+  .prose-custom pre {
+    font-family: var(--font-mono);
+    background-color: rgb(var(--bg-elevated));
+    border: 1px solid rgb(var(--border));
+    padding: 1em 1.25em;
+    border-radius: 0.5em;
+    overflow-x: auto;
+    font-size: 0.875em;
+    line-height: 1.6;
+  }
+
+  .prose-custom pre code {
+    background: none;
+    padding: 0;
+    color: inherit;
+  }
+
+  .prose-custom hr {
+    border: 0;
+    border-top: 1px solid rgb(var(--border));
+    margin: 2.5em 0;
+  }
+
+  .prose-custom img {
+    border-radius: 0.5em;
+    border: 1px solid rgb(var(--border));
+  }
+</style>

@@ -1,0 +1,99 @@
+---
+// Hero: intro copy + small animated cat mascot (hidden on mobile to save space).
+---
+
+<section class="pt-16 md:pt-20 pb-8">
+  <div class="flex items-start gap-6">
+    <div class="flex-1 min-w-0">
+      <p class="text-sm text-muted animate-fade-up">hi there,</p>
+      <h1 class="font-serif text-4xl md:text-5xl font-semibold tracking-tight mt-2 animate-fade-up delay-100">
+        i'm <span class="text-accent">usmon</span>
+      </h1>
+      <p class="mt-5 text-lg max-w-prose leading-relaxed animate-fade-up delay-200" style="color: rgb(var(--fg) / 0.86);">
+        16 y/o Android & Kotlin Multiplatform developer. I build things non-tech
+        users can use with ease. I love beautiful UIs, open source, and cats.
+      </p>
+      <div class="mt-6 flex items-center gap-5 text-sm animate-fade-up delay-300">
+        <a href="/posts" class="font-medium text-fg hover:text-accent transition-colors">
+          read posts →
+        </a>
+        <a href="https://github.com/rainxchzed" class="font-medium text-muted hover:text-accent transition-colors">
+          github
+        </a>
+        <a href="mailto:rainxch.dev@gmail.com" class="font-medium text-muted hover:text-accent transition-colors">
+          email
+        </a>
+      </div>
+    </div>
+
+    <!-- Cat mascot — hidden on mobile for space -->
+    <div class="hidden sm:block text-fg animate-fade-up delay-500 shrink-0" aria-hidden="true">
+      <svg viewBox="0 0 140 140" class="h-36 w-36">
+        <!-- Tail: rendered first so it sits behind the body; animated via CSS -->
+        <path
+          class="cat-tail"
+          d="M103 94 Q128 82 116 48"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="8"
+          stroke-linecap="round"
+        />
+
+        <!-- Body: rounded sitting pose -->
+        <ellipse cx="70" cy="100" rx="33" ry="22" fill="currentColor" />
+
+        <!-- Front paws -->
+        <ellipse cx="56" cy="118" rx="9" ry="5" fill="currentColor" />
+        <ellipse cx="84" cy="118" rx="9" ry="5" fill="currentColor" />
+        <!-- Paw pads -->
+        <circle cx="56" cy="118" r="1.6" fill="rgb(var(--accent))" opacity="0.55" />
+        <circle cx="84" cy="118" r="1.6" fill="rgb(var(--accent))" opacity="0.55" />
+
+        <!-- Head: WIDER than tall for a chubby chibi face -->
+        <ellipse cx="70" cy="58" rx="42" ry="34" fill="currentColor" />
+
+        <!-- Ears: shorter, to stop the face from feeling elongated -->
+        <path d="M38 32 L30 12 L56 28 Z" fill="currentColor" />
+        <path d="M102 32 L110 12 L84 28 Z" fill="currentColor" />
+
+        <!-- Inner ears (accent blue) -->
+        <path d="M41 27 L35 16 L50 26 Z" fill="rgb(var(--accent))" opacity="0.85" />
+        <path d="M99 27 L105 16 L90 26 Z" fill="rgb(var(--accent))" opacity="0.85" />
+
+        <!-- Big ROUND eyes — each grouped for a clean blink.
+             Round pupil (not an ellipse) = kawaii, not realistic slit. -->
+        <g class="cat-eye">
+          <circle cx="54" cy="58" r="7" fill="rgb(var(--bg))" />
+          <circle cx="54" cy="58" r="3.2" fill="currentColor" />
+          <circle cx="55.5" cy="56" r="2" fill="rgb(var(--bg))" />
+          <circle cx="52.5" cy="60.5" r="0.9" fill="rgb(var(--bg))" />
+        </g>
+        <g class="cat-eye">
+          <circle cx="86" cy="58" r="7" fill="rgb(var(--bg))" />
+          <circle cx="86" cy="58" r="3.2" fill="currentColor" />
+          <circle cx="87.5" cy="56" r="2" fill="rgb(var(--bg))" />
+          <circle cx="84.5" cy="60.5" r="0.9" fill="rgb(var(--bg))" />
+        </g>
+
+        <!-- Blush cheeks (soft blue) -->
+        <ellipse cx="38" cy="70" rx="6" ry="3.5" fill="rgb(var(--accent))" opacity="0.35" />
+        <ellipse cx="102" cy="70" rx="6" ry="3.5" fill="rgb(var(--accent))" opacity="0.35" />
+
+        <!-- Nose -->
+        <path d="M67 68 L73 68 L70 72 Z" fill="rgb(var(--accent))" />
+
+        <!-- Mouth: tight two-curve smile, pulled up for a rounder face -->
+        <path d="M70 72 Q66 76 62 73" fill="none" stroke="rgb(var(--bg))" stroke-width="1.8" stroke-linecap="round" />
+        <path d="M70 72 Q74 76 78 73" fill="none" stroke="rgb(var(--bg))" stroke-width="1.8" stroke-linecap="round" />
+
+        <!-- Whiskers -->
+        <g stroke="rgb(var(--muted))" stroke-width="1" stroke-linecap="round" opacity="0.6">
+          <line x1="36" y1="69" x2="18" y2="65" />
+          <line x1="36" y1="72" x2="18" y2="75" />
+          <line x1="104" y1="69" x2="122" y2="65" />
+          <line x1="104" y1="72" x2="122" y2="75" />
+        </g>
+      </svg>
+    </div>
+  </div>
+</section>

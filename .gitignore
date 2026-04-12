@@ -1,0 +1,32 @@
+# build output
+dist/
+.output/
+
+# generated types
+.astro/
+
+# dependencies
+node_modules/
+
+# logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# environment variables
+.env
+.env.production
+
+# macOS-specific files
+.DS_Store
+
+# JetBrains settings folder
+.idea/
+
+# VS Code (keep recommended extensions if added later)
+.vscode/*
+!.vscode/extensions.json
+
+# Local-only files (personal notes, private docs)
+NOTES.md

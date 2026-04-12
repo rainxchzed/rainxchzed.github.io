@@ -1,0 +1,47 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="404 — lost cat" description="This page wandered off.">
+  <div class="mx-auto max-w-3xl px-4 sm:px-6 py-20 sm:py-24 text-center">
+    <!-- Sleeping cat illustration -->
+    <div class="text-fg mx-auto mb-8 w-36 animate-fade-up" aria-hidden="true">
+      <svg viewBox="0 0 140 80" class="w-full">
+        <!-- Z's floating above -->
+        <g fill="rgb(var(--accent))" opacity="0.6" class="animate-fade-up delay-500">
+          <text x="95" y="18" font-family="Fraunces, serif" font-size="12" font-weight="700">z</text>
+          <text x="105" y="12" font-family="Fraunces, serif" font-size="9" font-weight="700">z</text>
+          <text x="113" y="7" font-family="Fraunces, serif" font-size="6" font-weight="700">z</text>
+        </g>
+
+        <!-- Sleeping cat body (curled up) -->
+        <ellipse cx="60" cy="55" rx="45" ry="16" fill="currentColor" />
+        <!-- Head (tucked in) -->
+        <circle cx="30" cy="50" r="14" fill="currentColor" />
+        <!-- Ears -->
+        <path d="M20 42 L17 30 L28 40 Z" fill="currentColor" />
+        <path d="M34 40 L40 28 L40 42 Z" fill="currentColor" />
+        <!-- Closed eye (curved line) -->
+        <path d="M24 48 Q28 51 32 48" fill="none" stroke="rgb(var(--bg))" stroke-width="1.4" stroke-linecap="round" />
+        <!-- Nose -->
+        <circle cx="22" cy="52" r="1" fill="rgb(var(--accent))" />
+        <!-- Tail curled around -->
+        <path d="M98 58 Q115 48 100 38" fill="none" stroke="currentColor" stroke-width="5" stroke-linecap="round" />
+      </svg>
+    </div>
+
+    <h1 class="font-serif text-5xl font-semibold tracking-tight animate-fade-up delay-100">404</h1>
+    <p class="mt-4 text-muted max-w-md mx-auto animate-fade-up delay-200">
+      This page wandered off. The cat is unbothered, but you're lost.
+    </p>
+
+    <div class="mt-8 animate-fade-up delay-300">
+      <a
+        href="/"
+        class="inline-flex items-center gap-2 rounded-lg border border-default bg-elevated px-4 py-2 text-sm font-medium text-fg transition-colors hover:border-accent hover:text-accent"
+      >
+        ← back home
+      </a>
+    </div>
+  </div>
+</BaseLayout>
