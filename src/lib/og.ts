@@ -116,14 +116,14 @@ export async function generateOGImage(
                       gap: '14px',
                     },
                     children: [
-                      // Cat icon (simplified)
+                      // Branded icon — "r" on accent gradient square
                       {
                         type: 'div',
                         props: {
                           style: {
-                            width: '36px',
-                            height: '36px',
-                            borderRadius: '8px',
+                            width: '38px',
+                            height: '38px',
+                            borderRadius: '10px',
                             background:
                               'linear-gradient(180deg, #7dd3fc 0%, #38bdf8 100%)',
                             display: 'flex',
@@ -134,10 +134,13 @@ export async function generateOGImage(
                             type: 'div',
                             props: {
                               style: {
-                                fontSize: '20px',
+                                fontSize: '22px',
+                                fontWeight: 700,
+                                color: '#0a0a0a',
                                 lineHeight: 1,
+                                marginTop: '-1px',
                               },
-                              children: '🐱',
+                              children: 'r',
                             },
                           },
                         },
