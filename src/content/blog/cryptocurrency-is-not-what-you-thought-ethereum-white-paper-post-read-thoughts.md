@@ -1,6 +1,6 @@
 ---
-title: Cryptocurrency is not what you thought. Ethereum white paper post-read
-  thoughts.
+title: "Cryptocurrency is not what you thought. "
+description: What I learned reading the Ethereum whitepaper
 date: 2026-07-06
 tags:
   - crypto
