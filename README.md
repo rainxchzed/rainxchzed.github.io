@@ -1,68 +1,37 @@
-<div align="center">
+**[rainxchzed.dev](https://rainxchzed.dev)**
 
-<br />
-
-# rainxchzed.dev
-
-*personal site of a 16-year-old android &amp; kmp developer*
-
-<br />
-
-[![visitors](https://visitor-badge.laobi.icu/badge?page_id=rainxchzed.rainxchzed.github.io)](https://github.com/rainxchzed/rainxchzed.github.io)
-[![stars](https://img.shields.io/github/stars/rainxchzed/rainxchzed.github.io?style=flat&color=38bdf8&logo=github&logoColor=white&labelColor=gray)](https://github.com/rainxchzed/rainxchzed.github.io/stargazers)
-[![last commit](https://img.shields.io/github/last-commit/rainxchzed/rainxchzed.github.io?style=flat&color=38bdf8&labelColor=gray)](https://github.com/rainxchzed/rainxchzed-s_cool_website/commits/main)
-[![astro](https://img.shields.io/badge/astro-5-FF5D01?style=flat&logo=astro&logoColor=white&labelColor=gray)](https://astro.build)
-[![tailwindcss](https://img.shields.io/badge/tailwindcss-v4-38bdf8?style=flat&logo=tailwindcss&logoColor=white&labelColor=gray)](https://tailwindcss.com)
-[![built with](https://img.shields.io/badge/built_with-love_%26_cats-38bdf8?style=flat&labelColor=gray)](#)
-
-<br />
-
-**[&rarr; live at rainxchzed.dev](https://rainxchzed.dev)**
-
-<br />
-
-</div>
-
----
+personal site of Usmon, a 17-year-old developer focused on machine learning
 
 ## about
 
-I'm Usmon &mdash; a 16-year-old Android and Kotlin Multiplatform developer with big ambitions. I build [GitHub-Store](https://github.com/rainxchzed/GitHub-Store) (an open-source app store for GitHub releases, 11k&#9733;), [RikkaUi](https://github.com/rainxchzed/RikkaUi) (a shadcn-for-Compose design system), and assorted KMP experiments. Currently also diving deep into mathematics and the art of learning itself.
-
-This site is my corner of the web &mdash; short notes, longer posts, and somewhere to point people when they ask *"what are you working on?"*
-
-## features
-
-- light &amp; dark themes with an animated circular-reveal toggle
-- markdown-powered blog with type-safe frontmatter
-- view transitions between pages
-- an animated cat mascot (it blinks, its tail swishes)
-- RSS feed
-- fully responsive
+I'm Usmon, a 17-year-old developer currently focused on machine learning. Before that, I built Android and Kotlin Multiplatform apps, including [Komi Store](https://github.com/komi-store/komi-store) (a cross-platform app store for releases on GitHub, Codeberg and other forges) and [RikkaUi](https://github.com/rainxchzed/RikkaUi) (a shadcn-for-Compose design system).
 
 ## stack
 
-|           |                                                                                      |
-| :-------- | :----------------------------------------------------------------------------------- |
-| framework | **[Astro 5](https://astro.build)** &mdash; static site with islands for interactivity |
-| styling   | **[Tailwind CSS v4](https://tailwindcss.com)** &mdash; utility-first, CSS-variable themes |
-| language  | **TypeScript** &mdash; strict mode, end to end                                       |
-| motion    | **View Transitions API** &mdash; page morphs and the circular theme swap             |
-| hosting   | **[Vercel](https://vercel.com)**                                                     |
+Built on [Anthony Fu](https://github.com/antfu)'s toolchain, following the design of [antfu.me](https://antfu.me):
+
+|          |                                                                                                                                                |
+| :------- | :--------------------------------------------------------------------------------------------------------------------------------------------- |
+| app      | [Vue](https://vuejs.org) + [Vite](https://vite.dev), prerendered with [vite-ssg](https://github.com/antfu-collective/vite-ssg)                 |
+| styling  | [UnoCSS](https://unocss.dev) with attributify mode and [Iconify](https://icones.js.org) icons                                                    |
+| content  | Markdown pages via [unplugin-vue-markdown](https://github.com/unplugin/unplugin-vue-markdown), code highlighting by [Shiki](https://shiki.style) |
+| utils    | [VueUse](https://vueuse.org), file-based routing from `vue-router`                                                                             |
+| lint     | [@antfu/eslint-config](https://github.com/antfu/eslint-config)                                                                                 |
+| comments | [giscus](https://giscus.app) on GitHub Discussions                                                                                             |
+| hosting  | GitHub Pages                                                                                                                                   |
+
+## writing
+
+Blog entries are Markdown files in [`pages/blog/`](./pages/blog). Frontmatter takes `title`, `date`, and optional `description`, `tags`, and `draft`. Drafts render in dev but are left out of the build. They can also be written through the Decap CMS editor at `/admin`.
 
 ## run it locally
 
 ```bash
-npm install
-npm run dev     # → http://localhost:4321
+pnpm install
+pnpm dev     # → http://localhost:3333
+pnpm build   # → dist/
 ```
 
 ## credits
 
-Design inspired by [antfu.me](https://antfu.me), [sxzz.dev](https://sxzz.dev), and [nathanchen.me](https://nathanchen.me) &mdash; three personal sites I spent a lot of time admiring.
-
----
-
-<div align="center">
-  <sub><i>a cat approves this readme</i></sub>
-</div>
+Design and parts of the code (prose styles, plum background, theme transition) are adapted from [antfu.me](https://github.com/antfu/antfu.me), MIT licensed.
