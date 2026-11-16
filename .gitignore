@@ -30,3 +30,10 @@ pnpm-debug.log*
 
 # Local-only files (personal notes, private docs)
 NOTES.md
+
+# vite / unplugin generated
+.vite-ssg-temp
+components.d.ts
+auto-imports.d.ts
+typed-router.d.ts
+public/assets/fonts

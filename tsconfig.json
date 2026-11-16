@@ -1,5 +1,25 @@
 {
-  "extends": "astro/tsconfigs/strict",
-  "include": [".astro/types.d.ts", "**/*"],
-  "exclude": ["dist"]
+  "compilerOptions": {
+    "target": "ESNext",
+    "jsx": "preserve",
+    "lib": ["DOM", "ESNext"],
+    "baseUrl": ".",
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
+    "paths": {
+      "~/*": ["src/*"]
+    },
+    "resolveJsonModule": true,
+    "types": [
+      "node",
+      "vite/client",
+      "vue-router/auto",
+      "unplugin-icons/types/vue"
+    ],
+    "strict": true,
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "skipLibCheck": true
+  },
+  "exclude": ["dist", "node_modules"]
 }
